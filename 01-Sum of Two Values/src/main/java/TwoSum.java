@@ -1,42 +1,33 @@
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.Scanner;
 
 public class TwoSum {
-    public int[] findTwoValues(int[] array, int target) {
-        final int[] sortedArray = Arrays.stream(array).sorted().toArray();
 
-        int r = 0;
-        int l = sortedArray.length - 1;
-
-        while (r <= l) {
-            final int sumTwoValues = sortedArray[r] + sortedArray[l];
-            if (sumTwoValues == target)
-                return new int[]{sortedArray[r], sortedArray[l]};
-            else if (sumTwoValues > target) {
-                l--;
-            } else {
-                r++;
-            }
-        }
-        return new int[]{-1};
+    public static void main(String[] args) {
+        final Scanner scanner = new Scanner(System.in);
+        final String input = scanner.nextLine();
+        final String[] splitInput = input.split(" ");
+        final int arraySize = Integer.parseInt(splitInput[0]);
+        final int targetSum = Integer.parseInt(splitInput[1]);
+        final String inputArray = scanner.nextLine();
+        int[] array = Arrays.stream(inputArray.split(" ")).mapToInt(Integer::parseInt).toArray();
+        System.out.println(findTwoValuesByHash(array, targetSum));
     }
 
-    public int[] findTwoValuesByHash(int[] array, int target) {
-        LinkedHashMap<Integer, Boolean> hashMap = new LinkedHashMap<>();
+    public static String findTwoValuesByHash(int[] array, int target) {
+        LinkedHashMap<Integer, Integer> hashMap = new LinkedHashMap<>();
 
-        int y;
-        for (int n : array) {
-            y = target - n;
-            if (doesValueExistInHash(hashMap, y))
-                return new int[]{n, y};
-            else
-                hashMap.put(n, Boolean.TRUE);
+        int complement;
+        for (int i = 0; i < array.length; i++) {
+            int current = array[i];
+            complement = target - current;
+            if (hashMap.containsKey(complement)) {
+                return String.format("%d %d", hashMap.get(complement), i + 1);
+            } else
+                hashMap.put(current, i + 1);
         }
-        return new int[]{-1};
-    }
-
-    private static boolean doesValueExistInHash(LinkedHashMap<Integer, Boolean> hashMap, int y) {
-        return Boolean.TRUE.equals(hashMap.get(y));
+        return "-1";
     }
 
     @Override
