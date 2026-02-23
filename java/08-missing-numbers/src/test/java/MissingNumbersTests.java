@@ -10,10 +10,22 @@ public class MissingNumbersTests {
     @Test
     public void find_missing_numbers(){
 
-        final MissingNumbers missingNumbers = new MissingNumbers();
+        final var missingNumbers = new MissingNumbers();
 
         int[] nums = new int[]{4,3,2,7,8,2,3,1};
         List<Integer> disappearedNumbers = missingNumbers.findDisappearedNumbers(nums);
+
+        final List<Integer> expected = List.of(5, 6);
+        assertThat(disappearedNumbers).isEqualTo(expected);
+    }
+
+    @Test
+    public void find_missing_numbers_with_extra_space(){
+
+        final var missingNumbers = new MissingNumbers();
+
+        int[] nums = new int[]{4,3,2,7,8,2,3,1};
+        List<Integer> disappearedNumbers = missingNumbers.findDisappearedNumbersWithExtraSpace(nums);
 
         final List<Integer> expected = List.of(5, 6);
         assertThat(disappearedNumbers).isEqualTo(expected);
